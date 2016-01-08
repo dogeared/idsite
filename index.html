@@ -20,7 +20,7 @@
     <script type="text/ng-template" id="views/login.html">
       <div class="view login-view" ng-show="ready">
         <div class="box row">
-          <div class="email-password-area  col-xs-12" ng-class="[hasSocial ? 'small col-sm-8' : 'large col-sm-12']">
+          <div class="email-password-area  col-xs-12" ng-class="[hasProviders ? 'small col-sm-8' : 'large col-sm-12']">
             <div class="header">
               <span>Log In</span>
               <span ng-show="canRegister" wd-can-register>
@@ -38,6 +38,7 @@
               <span>?</span>
             </div>
             <div class="alert alert-danger" ng-show="errors.unknown">An unkown error has occurred</div>
+            <div class="alert alert-danger" ng-show="errors.emailPasswordRequired">Please enter your email and password.</div>
             <div class="alert alert-danger" ng-show="errors.userMessage">
               <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
               <br/>
@@ -46,8 +47,8 @@
             </div>
             <form class="login-form form-horizontal" role="form" ng-submit="submit()">
               <div class="form-group group-email" ng-show="showOrganizationField" ng-class="{'has-error': (errors.organizationNameKeyInvalid || errors.organizationNameKeyRequired)}">
-                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Organization</label>
-                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                <label ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-4']">Organization</label>
+                <div ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-8']">
                   <input class="form-control" type="text" name="organizationNameKey" ng-model="organizationNameKey" placeholder="Organization" ng-disabled="disableOrganizationField"/>
 
                   <span ng-if="errors.organizationNameKeyRequired" class="help-block">
@@ -59,19 +60,19 @@
                 </div>
               </div>
               <div class="form-group group-email">
-                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Email</label>
-                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                <label ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-4']">Email</label>
+                <div ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-8']">
                   <input class="form-control" type="text" name="username" ng-model="username" placeholder="Email"/>
                 </div>
               </div>
               <div class="form-group group-password">
-                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Password</label>
-                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                <label ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-4']">Password</label>
+                <div ng-class="[hasProviders ? 'col-sm-12' : 'col-sm-8']">
                   <input class="form-control" type="password" name="password" ng-model="password" placeholder="Password"/>
                 </div>
               </div>
               <div class="form-group group-remember-me">
-                <div class="col-sm-8" ng-class="[hasSocial ? '' : 'col-sm-offset-4']">
+                <div class="col-sm-8" ng-class="[hasProviders ? '' : 'col-sm-offset-4']">
                   <input type="checkbox" id="remember">
                   <label for="remember">Remember me</label>
                 </div>
@@ -82,10 +83,10 @@
             </form>
           </div>
 
-          <div class="social-area  col-xs-12 col-sm-4" ng-show="hasSocial">
+          <div class="provider-area  col-xs-12 col-sm-4" ng-show="hasProviders">
             <div class="header">&nbsp;</div>
             <label>Easy 1-click login:</label>
-            <button ng-repeat="p in providers" class="btn btn-social btn-{{p.providerId}}" ng-click="providerLogin(p.providerId)">{{p.providerId}}</button>
+            <button ng-repeat="provider in providers" class="btn btn-social btn-{{provider.providerId}}" ng-click="providerLogin(provider)">{{provider.accountStore ? provider.accountStore.name : provider.providerId}}</button>
           </div>
 
         </div>
@@ -208,7 +209,7 @@
                 <br/>
                 <p>{{unknownError}}</p>
               </div>
-              <button class="btn btn-forgot btn-sp-green" type="submit">Reset Password</button>
+              <button class="btn btn-forgot btn-sp-green" ng-disabled="submitting" type="submit">Reset Password</button>
             </form>
           </div>
         </div>
@@ -222,7 +223,7 @@
             <div class="header">
               <span ng-show="status=='verified'">Password Reset</span>
               <span ng-show="status=='failed'">Sorry! Something went wrong.</span>
-              <span ng-show="status=='success'">Your have successfully changed your password</span>
+              <span ng-show="status=='success'">You have successfully changed your password.</span>
             </div>
             <div ng-show="status=='failed'">
               <p>
@@ -270,6 +271,7 @@
           </div>
         </div>
       </div>
+
     </script>
     <script type="text/ng-template" id="views/verify.html">
       <div class="view verify-view" ng-show="status!=='loading'">
@@ -318,15 +320,25 @@
       <div class="view error-view">
         <div class="row">
           <div class="col-sm-12">
+          <p>&nbsp;</p>
+          <h2 class="text-center">Sorry! There was a problem.</h2>
+          <hr>
             <div class="alert alert-warning">
-              <p>Sorry, there is a problem.  The error is:</p>
-              <br/>
-              <p class="alert alert-danger" ng-repeat="e in errors">
-                <span>{{e}}</span>
+              <p>
+                Please use your browser's back button to return to the previous page, then try again.
               </p>
-              <br/>
-              <p>Please use your browser's back button to return to the previous page, then try again.</p>
             </div>
+
+            <p class="alert">
+              If this problem persists, please provide this error information to your support team:
+            </p>
+
+            <div class="well text-center">
+              <div class="" ng-repeat="e in errors">
+                <strong>{{e}}</strong>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
