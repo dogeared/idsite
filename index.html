@@ -12,7 +12,7 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="styles/main.css">
 
     <script src="scripts/vendor.js"></script>
   </head>
@@ -40,7 +40,7 @@
             <div class="alert alert-danger" ng-show="errors.unknown">An unkown error has occurred</div>
             <div class="alert alert-danger" ng-show="errors.emailPasswordRequired">Please enter your email and password.</div>
             <div class="alert alert-danger" ng-show="errors.userMessage">
-              <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
+              <strong>Sorry, an error occured.  Please return to the previous page and try again.</strong>
               <br/>
               <br/>
               <p>{{errors.userMessage}}</p>
@@ -107,7 +107,7 @@
             </div>
             <form class="registration-form form-horizontal sp-form" role="form" ng-controller="RegistrationFormCtrl" ng-submit="submit()">
               <div class="alert alert-danger" ng-show="unknownError">
-                <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
+                <strong>Sorry, an error occured.  Please return to the previous page and try again.</strong>
                 <br/>
                 <br/>
                 <p>{{unknownError}}</p>
@@ -158,7 +158,7 @@
             </form>
           </div>
         </div>
-        <a class="to-login" href="#">Back to Log In</a>
+        <a class="to-login" href="#/">Back to Log In</a>
       </div>
     </script>
     <script type="text/ng-template" id="views/forgot.html">
@@ -204,7 +204,7 @@
                 </div>
               </div>
               <div class="alert alert-danger" ng-show="unknownError">
-                <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
+                <strong>Sorry, an error occured.  Please return to the previous page and try again.</strong>
                 <br/>
                 <br/>
                 <p>{{unknownError}}</p>
@@ -213,7 +213,7 @@
             </form>
           </div>
         </div>
-        <a ng-show="!sent" class="to-login" href="#" wd-back-to-login>Back to Log In</a>
+        <a ng-show="!sent" class="to-login" href="#/" wd-back-to-login>Back to Log In</a>
       </div>
     </script>
     <script type="text/ng-template" id="views/reset.html">
@@ -261,7 +261,7 @@
                 </div>
               </div>
               <div class="alert alert-danger" ng-show="unknownError">
-                <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
+                <strong>Sorry, an error occured.  Please return to the previous page and try again.</strong>
                 <br/>
                 <br/>
                 <p>{{unknownError}}</p>
